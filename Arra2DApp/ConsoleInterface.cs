@@ -44,20 +44,22 @@ namespace Arra2DApp
             return array2D;
         }
 
-        public static void ProgramControlOutput(int[,] array2D)
+        public static void arrayOperationsMenu(int[,] array2D)
         {
             Console.Clear();
             ConsoleInterface.OutputOfProgramTitle();
 
             Array2D.Print2DArray(array2D);
-            Console.WriteLine("""
-                              Выберите операцию из следующего списка:
-                              1 - Найти количество положительных чисел в матрице
-                              2 - Найти количество отрицательных чисел в матрице
-                              3 - Сортировка элементов матрицы построчно
-                              4 - Инверсия элементов матрицы построчно
-                              """);
 
+            Console.WriteLine("""
+                              Список доступных операций с двухмерным массивом:
+                                1 - Найти количество положительных чисел в матрице
+                                2 - Найти количество отрицательных чисел в матрице
+                                3 - Сортировка элементов матрицы построчно по возврастанию
+                                4 - Сортировка элементов матрицы построчно по убыванию
+                                5 - Инверсия элементов матрицы построчно
+                              """);
+            Console.Write("\nВведите номер операции, который вы хотите сделать, или выведите 'q' для выхода из программы: ");
         }
 
         private static void WriteErrorInConsole(string msg)
@@ -102,6 +104,35 @@ namespace Arra2DApp
 
                 return listNumbers;
             } while (true);
+        }
+
+
+        public static void MakeOperationOnArray(string operation, int[,] array2D)
+        {
+            switch (operation)
+            {
+                case "1":
+                    Array2D.OutputQuantityNegativeNumbersInArray2D(array2D);
+                    break;
+                case "2":
+                    Array2D.OutputQuantityPositiveNumbersInArray2D(array2D);
+                    break;
+                case "3":
+                    Console.Write("Укажи индекс подмассива в котором нужно сделать сортировку: ");
+                    int indexOfSortingArray = getNumbersFromInput(1).First();
+                    Array2D.SortSubarrayInArray2D(true, array2D, indexOfSortingArray);
+                    break;
+                case "4":
+                    Console.WriteLine("Укажи номер массива в котором нужно сдеать сортировку");
+
+                    break;
+                case "5":
+                    //Array2D.InvertSubarrayInArray2D();
+                    break;
+            }
+
+
+
         }
     }
 }

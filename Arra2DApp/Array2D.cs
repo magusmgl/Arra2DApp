@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -53,32 +54,76 @@ namespace Arra2DApp
 
             Console.WriteLine($"Количество положительных чисел в массиве - {counter}");
         }
-
-        private static Random random = new Random();
-        private static int Partition(int left, int right, int[] arr)
+        public static int[] QuickSort(int[] array, int leftIndex, int rightIndex)
         {
-            var pivot = arr[random.Next(left, right)];
-            var m = left;
-            for (int i = left; i < right; i++)
+            if (leftIndex >= rightIndex) return array;
+
+            int pivot = GetPivot(array, leftIndex, rightIndex);
+            QuickSort(array, leftIndex, pivot - 1);
+            QuickSort(array, pivot + 1, rightIndex);
+
+            return array;
+        }
+
+        private static int GetPivot(int[] array, int leftIndex, int rightIndex)
+        {
+            var pivot = leftIndex - 1;
+            for (int i = leftIndex; i < rightIndex; i++)
             {
-                if (arr[i] < pivot)
+                if (array[i] < array[rightIndex])
                 {
-                    (arr[i], arr[m]) = (arr[m], arr[i]);
-                    m++;
+                    pivot++;
+                    (array[i], array[pivot]) = (array[pivot], array[i]);
                 }
-
             }
-            return m;
+            pivot++;
+            (array[rightIndex], array[pivot]) = (array[pivot], array[rightIndex]);
+            return pivot;
         }
 
-        internal static void SortArray()
+        public static void InvertSubarrayInArray2D(int[,] array2D, int indexSortingArray)
         {
-            throw new NotImplementedException();
+            int[] arrayToInvert = GetSubarrayFromArray2D(array2D, indexSortingArray);
+
+            var length = arrayToInvert.Length;
+            for (int i = 0; i < arrayToInvert.Length / 2; i++)
+            {
+                (arrayToInvert[i], arrayToInvert[length - i]) = (arrayToInvert[length - i], arrayToInvert[i]);
+            }
+
+            UpdateSubarrayInArray(array2D, indexSortingArray, arrayToInvert);
+
         }
 
-        internal static void InvertArray()
+        private static void UpdateSubarrayInArray(int[,] array2D, int indexOfArray, int[] newArray)
         {
-            throw new NotImplementedException();
+            for (int i = 0; i < array2D.GetLength(0); i++)
+            {
+                if (i == indexOfArray)
+                {
+                    for (int j = 0; j < array2D.GetLength(1); j++)
+                    {
+                        array2D[i, j] = newArray[j];
+                    }
+                }
+            }
+        }
+
+        public static void SortSubarrayInArray2D(bool isAscendingOrder, int[,] array2D, int indexSortingArray)
+        {
+            int[] arrayToSort = GetSubarrayFromArray2D(array2D, indexSortingArray);
+
+            if (isAscendingOrder)
+            {
+                QuickSort(arrayToSort, 0, arrayToSort.Length - 1);
+            }
+
+            UpdateSubarrayInArray(array2D, indexSortingArray, arrayToSort);
+        }
+
+        private static int[] GetSubarrayFromArray2D(int[,] array2D, int indexOfArray)
+        {
+            return Enumerable.Range(0, array2D.GetLength(1)).Select(x => array2D[indexOfArray, x]).ToArray();
         }
     }
 }
