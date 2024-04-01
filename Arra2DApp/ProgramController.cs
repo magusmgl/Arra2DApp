@@ -23,7 +23,7 @@ namespace Arra2DApp
 
                 if (numberOfOperation.ToLower() == "q") break;
 
-                ConsoleInterface.MakeOperationOnArray(numberOfOperation, array2D);
+                ConsoleInterface.MakeOperationOnArray2D(numberOfOperation, array2D);
             }
         }
     }

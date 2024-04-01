@@ -34,7 +34,7 @@ namespace Arra2DApp
             {
                 Console.Write($"Введите через пробел {lengthOfTwoDimension} чисел для {i + 1} массива матрицы: ");
 
-                List<int>? elementsArray = getNumbersFromInput(lengthOfTwoDimension);
+                List<int>? elementsArray = getNumbersFromInput(lengthOfTwoDimension, true);
                 for (int j = 0; j < array2D.GetLength(1); j++)
                 {
                     array2D[i, j] = elementsArray[j];
@@ -107,32 +107,36 @@ namespace Arra2DApp
         }
 
 
-        public static void MakeOperationOnArray(string operation, int[,] array2D)
+        public static void MakeOperationOnArray2D(string operation, int[,] array2D)
         {
             switch (operation)
             {
                 case "1":
-                    Array2D.OutputQuantityNegativeNumbersInArray2D(array2D);
+                    Array2D.OutputQuantityPositiveNumbersInArray2D(array2D);
+                    Console.WriteLine("\nНажмите любую клавишу чтобы продолжить");
+                    Console.ReadKey(true);
                     break;
                 case "2":
-                    Array2D.OutputQuantityPositiveNumbersInArray2D(array2D);
+                    Array2D.OutputQuantityNegativeNumbersInArray2D(array2D);
+                    Console.WriteLine("Нажмите любую клавишу чтобы продолжить");
+                    Console.ReadKey(true);
                     break;
                 case "3":
-                    Console.Write("Укажи индекс подмассива в котором нужно сделать сортировку: ");
-                    int indexOfSortingArray = getNumbersFromInput(1).First();
-                    Array2D.SortSubarrayInArray2D(true, array2D, indexOfSortingArray);
+                    Console.Write("Укажи индекс подмассива в котором нужно сделать сортировку по возрастанию: ");
+                    int indexOfArraySortingAsc = getNumbersFromInput(1).First();
+                    Array2D.SortSubarrayInArray2D(array2D, indexOfArraySortingAsc);
                     break;
                 case "4":
-                    Console.WriteLine("Укажи номер массива в котором нужно сдеать сортировку");
-
+                    Console.Write("Укажи номер массива в котором нужно сделать сортировку по убыванию: ");
+                    int indexOfArraySortingDesc = getNumbersFromInput(1).First();
+                    Array2D.SortSubarrayInArray2D(array2D, indexOfArraySortingDesc, false);
                     break;
                 case "5":
-                    //Array2D.InvertSubarrayInArray2D();
+                    Console.Write("Укажи индекс подмассива который нужно инвертировать: ");
+                    int indexOfArrayToInvert = getNumbersFromInput(1).First();
+                    Array2D.InvertSubarrayInArray2D(array2D, indexOfArrayToInvert);
                     break;
             }
-
-
-
         }
     }
 }
