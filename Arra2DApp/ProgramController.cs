@@ -6,15 +6,14 @@ using System.Text;
 using System.Threading.Tasks;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
-namespace Arra2DApp
+namespace Array2DApp
 {
     public static class ProgramController
     {
         public static void RunProgram()
         {
             ConsoleInterface.OutputOfProgramTitle();
-
-            var array2D = ConsoleInterface.BuildArray2D();
+            var array2D = ConsoleInterface.FillTheArraysWithInt();
 
             while (true)
             {

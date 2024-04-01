@@ -5,7 +5,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Arra2DApp
+namespace Array2DApp
 {
     public static class Array2D
     {
@@ -54,15 +54,37 @@ namespace Arra2DApp
 
             Console.WriteLine($"\nКоличество положительных чисел в массиве - {counter}");
         }
-        public static int[] QuickSort(int[] array, int leftIndex, int rightIndex)
+
+        public static void InvertSubarrayInArray2D(int[,] array2D, int indexSortingArray)
         {
-            if (leftIndex >= rightIndex) return array;
+            int[] arrayToInvert = GetSubarrayFromArray2D(array2D, indexSortingArray);
+
+            invertElementsOfArray(arrayToInvert);
+
+            UpdateSubarrayInArray(array2D, indexSortingArray, arrayToInvert);
+        }
+
+        public static void SortSubarrayInArray2D(int[,] array2D, int indexSortingArray, bool isAscendingOrder = true)
+        {
+            int[] arrayToSort = GetSubarrayFromArray2D(array2D, indexSortingArray);
+
+            QuickSort(arrayToSort, 0, arrayToSort.Length - 1);
+
+            if (isAscendingOrder == false)
+            {
+                invertElementsOfArray(arrayToSort);
+            }
+
+            UpdateSubarrayInArray(array2D, indexSortingArray, arrayToSort);
+        }
+
+        private static void QuickSort(int[] array, int leftIndex, int rightIndex)
+        {
+            if (leftIndex >= rightIndex) return;
 
             int pivot = GetPivot(array, leftIndex, rightIndex);
             QuickSort(array, leftIndex, pivot - 1);
             QuickSort(array, pivot + 1, rightIndex);
-
-            return array;
         }
 
         private static int GetPivot(int[] array, int leftIndex, int rightIndex)
@@ -76,19 +98,10 @@ namespace Arra2DApp
                     (array[i], array[pivot]) = (array[pivot], array[i]);
                 }
             }
+
             pivot++;
             (array[rightIndex], array[pivot]) = (array[pivot], array[rightIndex]);
             return pivot;
-        }
-
-        public static void InvertSubarrayInArray2D(int[,] array2D, int indexSortingArray)
-        {
-            int[] arrayToInvert = GetSubarrayFromArray2D(array2D, indexSortingArray);
-
-            invertElementsOfArray(arrayToInvert);
-
-            UpdateSubarrayInArray(array2D, indexSortingArray, arrayToInvert);
-
         }
 
         private static void invertElementsOfArray(int[] arrayToInvert)
@@ -106,26 +119,9 @@ namespace Arra2DApp
             {
                 if (i == indexOfArray)
                 {
-                    for (int j = 0; j < array2D.GetLength(1); j++)
-                    {
-                        array2D[i, j] = newArray[j];
-                    }
+                    for (int j = 0; j < array2D.GetLength(1); j++) array2D[i, j] = newArray[j];
                 }
             }
-        }
-
-        public static void SortSubarrayInArray2D(int[,] array2D, int indexSortingArray, bool isAscendingOrder = true)
-        {
-            int[] arrayToSort = GetSubarrayFromArray2D(array2D, indexSortingArray);
-
-            QuickSort(arrayToSort, 0, arrayToSort.Length - 1);
-
-            if (isAscendingOrder == false)
-            {
-                invertElementsOfArray(arrayToSort);
-            }
-
-            UpdateSubarrayInArray(array2D, indexSortingArray, arrayToSort);
         }
 
         private static int[] GetSubarrayFromArray2D(int[,] array2D, int indexOfArray)
